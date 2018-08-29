@@ -64,10 +64,12 @@ object UniversityTest extends App{
     def findPlayersWhoPlayFootball(hobbie:String){
       var students = ListBuffer.empty[Student]
       universityToStudentsMap.values.foreach(studentsList => studentsList.foreach(student => if(student.hobbies.contains(hobbie)) students+=student))
+      var studFromFor = for(stud <- universityToStudentsMap.values.flatten if(stud.hobbies.contains(hobbie))) yield stud  
       for(stud<- students) println("Student name is "+stud.name +" college code is "+stud.code+" Hobbies are "+stud.hobbies)
+      println("=================================== Duplicated Output ===============================================================")
+      for(stud<- studFromFor) println("Student name is "+stud.name +" college code is "+stud.code+" Hobbies are "+stud.hobbies)
+      println("=================================== Duplicated Output ===============================================================")
     }
-    
-    
     
     
     def findPlayersWhoPlayFootballFromTwoUnivs(hobbie: String, univ1:String, univ2:String){
@@ -79,8 +81,14 @@ object UniversityTest extends App{
           universityToStudentsMap.get(key).foreach(studentsList => studentsList.foreach(stud => if(stud.hobbies.contains(hobbie)) students+=stud))
         }
       }
-      
       for(stud<- students) println("Name is "+stud.name+" and code is "+stud.code)
+      // Duplicated.............................
+      
+//     universityToStudentsMap.values.flatten.foreach(student => if(codes.toList.contains(student.code) && student.hobbies.contains(hobbie)))
+     var studentsFromTwoUnivs = for(student <- universityToStudentsMap.values.flatten if(codes.toList.contains(student.code) && student.hobbies.contains(hobbie))) yield student
+     println("=================================== Duplicated Output ===============================================================")
+     for(stud<- studentsFromTwoUnivs) println("Name is "+stud.name+" and code is "+stud.code)
+     println("=================================== Duplicated Output ===============================================================")
       
     }
     
@@ -97,6 +105,16 @@ object UniversityTest extends App{
       
       for(stud<- students) println("Name is "+stud.name+" and id is "+stud.rollNo)
       
+      // Duplicated........................
+      
+      var studentsMap = for(student <- universityToStudentsMap.values.flatten if(universityMap(student.code).name.contains(name) && student.course==course)) yield student
+      println("=================================== Duplicated Output using flatten ===============================================================")
+      for(stud<- studentsMap) println("Name is "+stud.name+" and id is "+stud.rollNo)
+      println("=================================== Duplicated Output using flatten ===============================================================")
+      
+      println("=================================== Duplicated Output using filter ===============================================================")
+      universityToStudentsMap.values.flatten.filter(student => universityMap(student.code).name.contains(name) && student.course==course).foreach(p=> println("Name is "+p.name+" id is "+p.rollNo))
+      println("=================================== Duplicated Output using filter ===============================================================")
             
     }
     
