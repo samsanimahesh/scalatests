@@ -9,7 +9,7 @@ object UniversityTest extends App{
   
   var universityToStudentsMap:Map[String, ListBuffer[Student]] = Map.empty[String,ListBuffer[Student]]
   
-  var bufferedSource = io.Source.fromFile("G:/univ.csv")
+  var bufferedSource = io.Source.fromFile("univ.csv")
     for (line <- bufferedSource.getLines) {
         val cols = line.split(",").map(_.trim)
         // do whatever you want with the columns here
@@ -20,7 +20,7 @@ object UniversityTest extends App{
     println("==================================")
     for((k,v) <- universityMap) println("Key is "+k+ " and value is "+v.city)
     println("==================================")
-    bufferedSource = io.Source.fromFile("G:/students.csv")
+    bufferedSource = io.Source.fromFile("students.csv")
     for (line <- bufferedSource.getLines) {
         val cols = line.split(",").map(_.trim)
         // do whatever you want with the columns here
